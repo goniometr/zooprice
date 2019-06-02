@@ -182,7 +182,7 @@ namespace zoocool
                         {
                             var parames = new List<Param>();
                             var listParames = new Paramses().GetListParams(product.Id, skus.Id);
-                            foreach (var item in listParames)
+                            foreach (var item in listParames.Where(x=>x.Status == true))
                             {
                                 parames.Add(
                                     new Param()
@@ -203,8 +203,19 @@ namespace zoocool
                                     additname = " " + add.Text;
 
                             }
+
                             if (skus.Price == 0) skus.Price = product.Price;
                             if (skus.Price == 0) continue;
+
+                            var markup = listParames.Where(x => x.Status == false).FirstOrDefault()?.Text;
+                            double markupValue = 0;
+                            var resM = double.TryParse(markup, out markupValue);
+                            if (resM && markupValue > 0)
+                            {
+                                markupValue = markupValue / 100;
+                                skus.Price = Math.Round(skus.Price + skus.Price * markupValue, 0);
+                            }
+                            
                                 
                             
 
