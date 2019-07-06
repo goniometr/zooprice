@@ -34,7 +34,7 @@ namespace zoocool
 +" when t6.unit = 'kg' then 'кг'"
 +" when t6.unit = 'l' then 'л'"
 +" when t6.unit = 'ml' then 'мл'"
-+" when t6.unit = 'W' then 'вт'"
++" when t6.unit = 'W' then 'Вт'"
 +" when t6.unit = 'cm3' then 'см3'"
 +" end), 'true' " +
 "from shop_product_features t4"

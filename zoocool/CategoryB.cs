@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,7 +56,36 @@ namespace zoocool
             reader.Close();
             conn.Close();
 
+            var listCategoryReplace = new CategoryReplace().GetCategoryReplace();
+            foreach (var item in list)            
+                if (listCategoryReplace.Select(x => x.Id).Contains(item.Id))
+                    item.Name = listCategoryReplace.Where(x => x.Id == item.Id)?.FirstOrDefault()?.NewName;
+            
+            return list;
+        }
+    }
 
+
+    class CategoryReplace
+    {
+        public int Id { get; set; }
+        public string NewName { get; set; }
+
+        public List<CategoryReplace> GetCategoryReplace()
+        {
+            var list = new List<CategoryReplace>();
+            using (var csvParser = new StreamReader("listCategory.csv"))
+            {
+                while (!csvParser.EndOfStream)
+                {
+                    var lineIn = csvParser.ReadLine().Split(';');
+                    
+                    var res = false;
+                    var id = 0;
+                    res = int.TryParse(lineIn[0], out id);                                        
+                    list.Add(new CategoryReplace() { Id = id, NewName = lineIn[1] });
+                }
+            }
             return list;
         }
     }
