@@ -128,6 +128,8 @@ namespace zoocool
                 };
 
 
+
+                var listAddParams = new AddParam().GetListAddParam();
                 var listAdd = new Product().GetNAmeReplace();
                 var listPictureAdd = new Picture().GetListPicture();
                 foreach (var categoryId in listCategory)
@@ -189,6 +191,16 @@ namespace zoocool
                                     {
                                         Name = item.Name.ToString(),
                                         Text = item.Text.ToString()
+                                    });
+                            }
+
+                            foreach (var item in listAddParams.Where(z => z.GroupId == categoryId))
+                            {
+                                parames.Add(
+                                    new Param()
+                                    {
+                                        Name = item.ParamName,
+                                        Text = item.ParamValue
                                     });
                             }
 

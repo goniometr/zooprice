@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddParams.cs" />
     <Compile Include="CategoryB.cs" />
     <Compile Include="Feature.cs" />
     <Compile Include="FeatureValue.cs" />
