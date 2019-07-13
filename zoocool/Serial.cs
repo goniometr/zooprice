@@ -108,26 +108,20 @@ namespace zoocool
             [XmlElement(ElementName = "offers")]
             public Offers Offers { get; set; }
 
-            
-
 
             public Shop GetShops()
             {
                 var listVendor = new Vendor().GetListVendor();
                 var baseUrl = @"https://zoocool.com.ua/";
                 var list = new List<Shop>();
-                var listCategory = new CategoryB().GetListCategory().Select(x=>x.Id).ToList<int>();
+                var listCategory = new CategoryB().GetListCategory().Select(x => x.Id).ToList<int>();
                 var shop = new Shop()
                 {
                     Name = "NEMO SHOP",
                     Company = "NEMO SHOP",
                     Url = "https://zoocool.com.ua",
                     Currencies = new Currencies() { Currency = new Currency() { Id = "UAH", Rate = "1" } },
-                    //Categories = new Categories() { Category = categories },
-                    //Offers = new Offers() { Offer = listOffes }
                 };
-
-
 
                 var listAddParams = new AddParam().GetListAddParam();
                 var listAdd = new Product().GetNAmeReplace();
@@ -144,7 +138,7 @@ namespace zoocool
                             categories.Add(new Category()
                             {
                                 Id = cat.Id.ToString(),
-                                Text = cat.Name
+                                Text = cat.Name.ToString()
                             });
                         }
                         else
@@ -152,14 +146,13 @@ namespace zoocool
                             categories.Add(new Category()
                             {
                                 Id = cat.Id.ToString(),
-                                Text = cat.Name,
-                                ParentId = cat.Parent_Id.ToString()                              
+                                Text = cat.Name.ToString(),
+                                ParentId = cat.Parent_Id.ToString()
                             });
                             var parent = new CategoryB().GetListcategoryToPrice(cat.Parent_Id);
                             categories.Add(new Category()
                             {
                                 Id = parent.FirstOrDefault().Id.ToString(),
-                                //ParentId = parent.FirstOrDefault().Parent_Id.ToString(),
                                 Text = parent.FirstOrDefault().Name.ToString()
                             });
                         }
@@ -169,22 +162,22 @@ namespace zoocool
 
                     var products = new Product().GetListProduct(categoryId);
                     if (products.Count() == 0) continue;
-                    foreach(var product in products)
+                    foreach (var product in products)
                     {
-                        
+
                         if (!listPictureAdd.Where(x => x.link.Contains(product.Url)).Any()) continue;
-                        
+
                         var skuses = new Skus().GetListSkus(product.Id);
 
                         if (product.Images.Count() == 0)
                         {
                             continue;
                         }
-                        foreach(var skus in skuses)
+                        foreach (var skus in skuses)
                         {
                             var parames = new List<Param>();
                             var listParames = new Paramses().GetListParams(product.Id, skus.Id);
-                            foreach (var item in listParames.Where(x=>x.Status == true))
+                            foreach (var item in listParames.Where(x => x.Status == true))
                             {
                                 parames.Add(
                                     new Param()
@@ -199,8 +192,8 @@ namespace zoocool
                                 parames.Add(
                                     new Param()
                                     {
-                                        Name = item.ParamName,
-                                        Text = item.ParamValue
+                                        Name = item.ParamName.ToString(),
+                                        Text = item.ParamValue.ToString()
                                     });
                             }
 
@@ -211,9 +204,7 @@ namespace zoocool
                                 var addName = listAdd[product.addparam];
                                 var add = parames.Where(x => x.Name == addName).FirstOrDefault();
 
-                                if (add != null)
-                                    additname = " " + add.Text;
-
+                                if (add != null) additname = " " + add.Text.ToString();
                             }
 
                             if (skus.Price == 0) skus.Price = product.Price;
@@ -227,9 +218,6 @@ namespace zoocool
                                 markupValue = markupValue / 100;
                                 skus.Price = Math.Round(skus.Price + skus.Price * markupValue, 0);
                             }
-                            
-                                
-                            
 
                             listOffes.Add(new Offer()
                             {
@@ -240,7 +228,7 @@ namespace zoocool
                                 CurrencyId = "UAH",
                                 CategoryId = categoryId.ToString(),
                                 Picture = product.Images,
-                                Vendor = listVendor.Where(x=>x.Product_id == skus.Product_id)?.FirstOrDefault()?.Name,
+                                Vendor = listVendor.Where(x => x.Product_id == skus.Product_id)?.FirstOrDefault()?.Name,
                                 Stock_quantity = product.Count.ToString(),
                                 Name = product.Name.ToString() + additname.ToString(),
                                 Description = product.Description.ToString(),
@@ -249,59 +237,47 @@ namespace zoocool
                         }
                     }
                     if (listOffes.Count() == 0) continue;
-                    //var shop = new Shop()
-                    //{
-                    //    Name = "NEMO SHOP",
-                    //    Company = "NEMO SHOP",
-                    //    Url = "https://zoocool.com.ua",
-                    //    Currencies = new Currencies() { Currency = new Currency() { Id = "UAH", Rate = "1" } },
-                    //    Categories = new Categories() { Category = categories },
-                    //    Offers = new Offers() { Offer = listOffes}
-                    //};
-                    //list.Add(shop);
-                    if (shop.Categories == null)
-                        shop.Categories = new Categories() { Category = categories };
-                    else
-                    {
-                        shop.Categories.Category.AddRange(categories);
-                       // shop.Categories.Category = shop.Categories.Category.ToList().Distinct().ToList();
-                    }
-                    if (shop.Offers == null)
-                        shop.Offers = new Offers() { Offer = listOffes };
+
+                    if (shop.Categories == null) shop.Categories = new Categories() { Category = categories };
+                    else shop.Categories.Category.AddRange(categories);
+
+                    if (shop.Offers == null) shop.Offers = new Offers() { Offer = listOffes };
                     else shop.Offers.Offer.AddRange(listOffes);
-                    shop.Offers.Offer = shop.Offers.Offer.GroupBy(x => x.Id).Select(x => new Offer { Id = x.Key, 
-                        Available = x.Select(z => z.Available).FirstOrDefault(),
-                        CategoryId = x.Select(z=>z.CategoryId).FirstOrDefault(),
-                        CurrencyId = x.Select(z=>z.CurrencyId).FirstOrDefault(),
-                        Description = x.Select(z=>z.Description).FirstOrDefault(),
-                        Name = x.Select(z=>z.Name).FirstOrDefault(),
-                        Param = x.Select(z=>z.Param).FirstOrDefault(),
-                        Picture = x.Select(z=>z.Picture).FirstOrDefault(),
-                        Price = x.Select(z=>z.Price).FirstOrDefault(),
-                        Stock_quantity = x.Select(z=>z.Stock_quantity).FirstOrDefault(),
-                        Url = x.Select(z=>z.Url).FirstOrDefault(),
-                        Vendor  = x.Select(z=>z.Vendor).FirstOrDefault()
+                    shop.Offers.Offer = shop.Offers.Offer.GroupBy(x => x.Id).Select(x => new Offer
+                    {
+                        Id = x.Key,
+                        Available = x.Select(z => z.Available).FirstOrDefault().ToString(),
+                        CategoryId = x.Select(z => z.CategoryId).FirstOrDefault().ToString(),
+                        CurrencyId = x.Select(z => z.CurrencyId).FirstOrDefault().ToString(),
+                        Description = x.Select(z => z.Description).FirstOrDefault().ToString(),
+                        Name = x.Select(z => z.Name).FirstOrDefault().ToString(),
+                        Param = x.Select(z => z.Param).FirstOrDefault(),
+                        Picture = x.Select(z => z.Picture).FirstOrDefault(),
+                        Price = x.Select(z => z.Price).FirstOrDefault(),
+                        Stock_quantity = x.Select(z => z.Stock_quantity).FirstOrDefault(),
+                        Url = x.Select(z => z.Url).FirstOrDefault(),
+                        Vendor = x.Select(z => z.Vendor).FirstOrDefault().ToString()
                     }).ToList();
 
                     var listName = shop.Offers.Offer.GroupBy(x => x.Name);
-                    foreach (var item in listName)                    
-                        if (item.Count() > 1)                        
-                            Settings.Dublicates.Add(string.Concat(item.Select(x=>x.CategoryId).FirstOrDefault(), item.Select(x => x.Url).FirstOrDefault()));
+                    foreach (var item in listName)
+                        if (item.Count() > 1)
+                            Settings.Dublicates.Add(string.Concat(item.Select(x => x.CategoryId).FirstOrDefault(), item.Select(x => x.Url).FirstOrDefault()));
 
-                    foreach (var item in shop.Offers.Offer)                    
+                    foreach (var item in shop.Offers.Offer)
                         if (item.Description.Contains(" href"))
                             Settings.Urls.Add(item.Url);
-                    
+
                 }
                 if (shop.Categories == null) return shop;
                 shop.Categories.Category = shop.Categories.Category.GroupBy(x => x.Id).Select(x => new Category { Id = x.Key, ParentId = x.Select(z => z.ParentId).FirstOrDefault(), Text = x.Select(z => z.Text).FirstOrDefault() }).ToList();
                 return shop;
             }
 
-            //public override string ToString()
-            //{
-            //    return ToString().Replace("\"", "&quot;").Replace("&", "&amp;").Replace(">", "&gt;").Replace("<", "&lt;").Replace("'", "&apos;");
-            //}
+            public override string ToString()
+            {
+                return ToString().Replace("\"", "&quot;").Replace("&", "&amp;").Replace(">", "&gt;").Replace("<", "&lt;").Replace("'", "&apos;");
+            }
         }
 
 
@@ -322,9 +298,6 @@ namespace zoocool
                 };
 
                 XmlSerializer formatter = new XmlSerializer(typeof(Yml_catalog));
-
-             
-
 
                 using (FileStream fs = new FileStream("price.xml", FileMode.Create))
                 {
