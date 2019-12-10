@@ -35,11 +35,15 @@ namespace zoocool
         public List<AddParam> GetListAddParam()
         {
             var list = new List<AddParam>();
-            XmlSerializer formatter = new XmlSerializer(typeof(List<AddParam>));
-            using (FileStream fs = new FileStream("AddParams.xml", FileMode.OpenOrCreate))
+            if (File.Exists("AddParams.xml"))
             {
-                list = (List<AddParam>)formatter.Deserialize(fs);                
+                XmlSerializer formatter = new XmlSerializer(typeof(List<AddParam>));
+                using (FileStream fs = new FileStream("AddParams.xml", FileMode.Open))
+                {
+                    list = (List<AddParam>)formatter.Deserialize(fs);
+                }
             }
+            else Settings.Errores.Add("Файл с дополнительными параметрами AddParams.xml отсутствует");
             return list;
         }
     }

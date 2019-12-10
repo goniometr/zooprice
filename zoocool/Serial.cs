@@ -124,7 +124,7 @@ namespace zoocool
                 };
 
                 var listAddParams = new AddParam().GetListAddParam();
-                var listAdd = new Product().GetNAmeReplace();
+                var listAdd = new Product().GetNameReplace();
                 var listPictureAdd = new Picture().GetListPicture();
                 foreach (var categoryId in listCategory)
                 {

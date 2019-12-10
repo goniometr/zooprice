@@ -74,6 +74,11 @@ namespace zoocool
         public List<CategoryReplace> GetCategoryReplace()
         {
             var list = new List<CategoryReplace>();
+            if (!File.Exists("listCategory.csv")) 
+            {
+                Settings.Errores.Add("Файл с категориями отсутствует");
+                return list;
+            }
             using (var csvParser = new StreamReader("listCategory.csv"))
             {
                 while (!csvParser.EndOfStream)

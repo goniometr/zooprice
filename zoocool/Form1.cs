@@ -25,7 +25,13 @@ namespace zoocool
 
 
         private void Form1_Load(object sender, EventArgs e)
-        {          
+        {
+            if (!File.Exists("settings.txt"))
+            {
+                MessageBox.Show("Отсутствует файл с настройками settings.txt");
+                this.Close();
+                return;
+            }
             Settings.ConStr = File.ReadAllLines("settings.txt").FirstOrDefault();
           
             //var listCategory = new CategoryB().GetListCategory();

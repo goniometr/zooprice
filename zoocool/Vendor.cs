@@ -55,15 +55,19 @@ namespace zoocool
         public List<VendorReplace> GetVendorReplace()
         {
             var list = new List<VendorReplace>();
-            using (var csvParser = new StreamReader("tm.csv"))
+            if (File.Exists("tm.csv"))
             {
-                while (!csvParser.EndOfStream)
+                using (var csvParser = new StreamReader("tm.csv"))
                 {
-                    var lineIn = csvParser.ReadLine().Split(';');
-                    list.Add(new VendorReplace() { OldName = lineIn[0], NewName = lineIn[1] });
+                    while (!csvParser.EndOfStream)
+                    {
+                        var lineIn = csvParser.ReadLine().Split(';');
+                        list.Add(new VendorReplace() { OldName = lineIn[0], NewName = lineIn[1] });
+                    }
                 }
             }
-
+            else  Settings.Errores.Add("Отсутствует файл соответствия торговых марок tm.csv");
+            
             return list;
         }
     }

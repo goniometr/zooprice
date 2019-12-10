@@ -19,6 +19,12 @@ namespace zoocool
         public List<Picture> GetListPicture()
         {
             var list = new List<Picture>();
+            if (!Directory.Exists("Source")) 
+            {
+                Settings.Errores.Add("Папка Source отсутствует");
+                return list;
+            }
+
 
             var fullfiles = Directory.GetFiles("Source").ToList();
             List<string> files = new List<string>();

@@ -76,18 +76,22 @@ namespace zoocool
             return list;
         }
 
-        public Dictionary<int, string> GetNAmeReplace()
+        public Dictionary<int, string> GetNameReplace()
         {
             var list = new Dictionary<int, string>();
-            using (var csvParser = new StreamReader("addname.csv"))
+            if (File.Exists("addname.csv"))
             {
-                while (!csvParser.EndOfStream)
+                using (var csvParser = new StreamReader("addname.csv"))
                 {
-                    var lineIn = csvParser.ReadLine().Split(';');
-                    if (lineIn.Count() < 2) continue;
-                    list.Add(int.Parse(lineIn[0].ToString()), lineIn[1].ToString());
+                    while (!csvParser.EndOfStream)
+                    {
+                        var lineIn = csvParser.ReadLine().Split(';');
+                        if (lineIn.Count() < 2) continue;
+                        list.Add(int.Parse(lineIn[0].ToString()), lineIn[1].ToString());
+                    }
                 }
             }
+            else Settings.Errores.Add("Файл с дополнениями к названию addname.csv отсутствует");
             return list;
         }
 
