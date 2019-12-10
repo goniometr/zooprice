@@ -63,6 +63,10 @@ namespace zoocool
             public string Url { get; set; }
             [XmlElement(ElementName = "price")]
             public string Price { get; set; }
+
+            [XmlElement(IsNullable = false, ElementName = "price_old")]
+            public string Price_old { get; set; }
+
             [XmlElement(ElementName = "currencyId")]
             public string CurrencyId { get; set; }
             [XmlElement(ElementName = "categoryId")]
@@ -218,6 +222,7 @@ namespace zoocool
                                 markupValue = markupValue / 100;
                                 skus.Price = Math.Round(skus.Price + skus.Price * markupValue, 0);
                             }
+                       
 
                             listOffes.Add(new Offer()
                             {
@@ -225,6 +230,7 @@ namespace zoocool
                                 Available = "true",
                                 Url = baseUrl + product.Url.ToString(),
                                 Price = skus.Price.ToString(),
+                                Price_old = (skus.OldPrice == 0) ? null : skus.OldPrice.ToString(),
                                 CurrencyId = "UAH",
                                 CategoryId = categoryId.ToString(),
                                 Picture = product.Images,
@@ -233,7 +239,7 @@ namespace zoocool
                                 Name = product.Name.ToString() + additname.ToString(),
                                 Description = product.Description.ToString(),
                                 Param = parames
-                            });
+                            }) ;
                         }
                     }
                     if (listOffes.Count() == 0) continue;
@@ -254,6 +260,7 @@ namespace zoocool
                         Param = x.Select(z => z.Param).FirstOrDefault(),
                         Picture = x.Select(z => z.Picture).FirstOrDefault(),
                         Price = x.Select(z => z.Price).FirstOrDefault(),
+                        Price_old = x.Select(z => z.Price_old).FirstOrDefault(),
                         Stock_quantity = x.Select(z => z.Stock_quantity).FirstOrDefault(),
                         Url = x.Select(z => z.Url).FirstOrDefault(),
                         Vendor = x.Select(z => z.Vendor).FirstOrDefault().ToString()
