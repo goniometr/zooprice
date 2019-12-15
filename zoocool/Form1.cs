@@ -54,35 +54,35 @@ namespace zoocool
 
         private void trCategory_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            var category_id = (int)(e.Node.Tag);
-            if (category_id == 0)
-            {
-                grProduct.DataSource = new List<Product>();
-                return;
-            }
-            var listProduct = new Product().GetListProduct(category_id);
-            grProduct.DataSource = listProduct;
+            //var category_id = (int)(e.Node.Tag);
+            //if (category_id == 0)
+            //{
+            //    grProduct.DataSource = new List<Product>();
+            //    return;
+            //}
+            //var listProduct = new Product().GetListProduct(category_id);
+            //grProduct.DataSource = listProduct;
 
 
-            var listProductId = listProduct.Select(x=>x.Id).Distinct();
-            if (listProductId.Count() == 0) return;
-            var listStrId = string.Join(",", listProductId);
-            grFeature.DataSource = new Feature().GetListFetures(listStrId);
+            //var listProductId = listProduct.Select(x=>x.Id).Distinct();
+            //if (listProductId.Count() == 0) return;
+            //var listStrId = string.Join(",", listProductId);
+            //grFeature.DataSource = new Feature().GetListFetures(listStrId);
         }
 
 
 
         private void grProduct_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 1) return;
-            var pr_id = int.Parse(grProduct.Rows[e.RowIndex].Cells["idDataGridViewTextBoxColumn"].Value.ToString());
-            grSkus.DataSource = new Skus().GetListSkus(pr_id);
+            //if (e.RowIndex < 1) return;
+            //var pr_id = int.Parse(grProduct.Rows[e.RowIndex].Cells["idDataGridViewTextBoxColumn"].Value.ToString());
+            //grSkus.DataSource = new Skus().GetListSkus(pr_id);
         }
 
         private void grFeature_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            var list = new FeatureValue().GetValues(int.Parse(grFeature.Rows[e.RowIndex].Cells["idDataGridViewTextBoxColumn2"].Value.ToString()));
-            grFeatureValue.DataSource = list;
+            //var list = new FeatureValue().GetValues(int.Parse(grFeature.Rows[e.RowIndex].Cells["idDataGridViewTextBoxColumn2"].Value.ToString()));
+            //grFeatureValue.DataSource = list;
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -92,6 +92,12 @@ namespace zoocool
             MessageBox.Show("OK \n Errores: \n " + string.Join(",\n ", Settings.Errores.Distinct()) +
                 "\n Dublicate: \n " + string.Join(",\n ", Settings.Dublicates.Distinct()) +
                 "\n Urls: \n " + string.Join(",\n ", Settings.Urls.Distinct()));
+        }
+
+        private void toolStripLabel1_Click(object sender, EventArgs e)
+        {
+            var f = new fmOldPrice();
+            f.ShowDialog();
         }
     }
 }

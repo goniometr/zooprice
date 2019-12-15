@@ -59,6 +59,13 @@
     <Compile Include="fmCategory.Designer.cs">
       <DependentUpon>fmCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="OldPrice\BaseOldPrice.cs" />
+    <Compile Include="OldPrice\fmOldPrice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OldPrice\fmOldPrice.Designer.cs">
+      <DependentUpon>fmOldPrice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,6 +84,9 @@
     <Compile Include="Vendor.cs" />
     <EmbeddedResource Include="fmCategory.resx">
       <DependentUpon>fmCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OldPrice\fmOldPrice.resx">
+      <DependentUpon>fmOldPrice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -100,6 +110,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="zoocool.OldPrice.BaseOldPrice.datasource" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -109,5 +120,6 @@
   <ItemGroup>
     <None Include="Resources\Vextractor_ico_vextractor.gif" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
