@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using zoocool.AllProducts;
 using zoocool.Xml2CSharp;
 
 // This is the code for your desktop app.
@@ -95,6 +96,19 @@ namespace zoocool
         }
 
         private void toolStripLabel1_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void productAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var f = new fmAllProducts();
+            f.ShowDialog();
+
+
+        }
+
+        private void priceoldToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var f = new fmOldPrice();
             f.ShowDialog();

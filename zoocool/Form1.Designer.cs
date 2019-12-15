@@ -29,13 +29,16 @@ namespace zoocool
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.priceoldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.productAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.featureBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.featureValueBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.productBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.skusBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.tsPriceOld = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.featureBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.featureValueBindingSource)).BeginInit();
@@ -47,12 +50,48 @@ namespace zoocool
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
-            this.tsPriceOld});
+            this.toolStripDropDownButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(284, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::zoocool.Properties.Resources.Vextractor_ico_vextractor;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "Формировать прайс";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.priceoldToolStripMenuItem,
+            this.productAllToolStripMenuItem});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
+            this.toolStripDropDownButton1.Text = "toolStripDropDownButton1";
+            // 
+            // priceoldToolStripMenuItem
+            // 
+            this.priceoldToolStripMenuItem.Name = "priceoldToolStripMenuItem";
+            this.priceoldToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.priceoldToolStripMenuItem.Text = "price_old";
+            this.priceoldToolStripMenuItem.Click += new System.EventHandler(this.priceoldToolStripMenuItem_Click);
+            // 
+            // productAllToolStripMenuItem
+            // 
+            this.productAllToolStripMenuItem.Name = "productAllToolStripMenuItem";
+            this.productAllToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.productAllToolStripMenuItem.Text = "productAll";
+            this.productAllToolStripMenuItem.Click += new System.EventHandler(this.productAllToolStripMenuItem_Click);
             // 
             // featureBindingSource
             // 
@@ -69,23 +108,6 @@ namespace zoocool
             // skusBindingSource
             // 
             this.skusBindingSource.DataSource = typeof(zoocool.Skus);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::zoocool.Properties.Resources.Vextractor_ico_vextractor;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "Формировать прайс";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
-            // tsPriceOld
-            // 
-            this.tsPriceOld.Name = "tsPriceOld";
-            this.tsPriceOld.Size = new System.Drawing.Size(55, 22);
-            this.tsPriceOld.Text = "price_old";
-            this.tsPriceOld.Click += new System.EventHandler(this.toolStripLabel1_Click);
             // 
             // Form1
             // 
@@ -118,7 +140,9 @@ namespace zoocool
         private System.Windows.Forms.BindingSource featureBindingSource;
         private System.Windows.Forms.BindingSource featureValueBindingSource;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripLabel tsPriceOld;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem priceoldToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem productAllToolStripMenuItem;
     }
 }
 
