@@ -18,7 +18,7 @@ namespace zoocool
             var listVendorReplace = new VendorReplace().GetVendorReplace();
 
             var list = new List<Vendor>();
-            MySqlConnection conn = new MySqlConnection(Settings.ConStr);
+            MySqlConnection conn = new MySqlConnection(Settings.PriceSettings.ConStr);
             conn.Open();
             string sql = "select t1.product_id, t3.value from shop_product_features t1 "
 + " inner join shop_feature t2 on t1.feature_id = t2.id "

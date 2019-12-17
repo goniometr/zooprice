@@ -116,14 +116,14 @@ namespace zoocool
             public Shop GetShops()
             {
                 var listVendor = new Vendor().GetListVendor();
-                var baseUrl = @"https://zoocool.com.ua/";
+                var baseUrl = Settings.PriceSettings.BaseURL;
                 var list = new List<Shop>();
                 var listCategory = new CategoryB().GetListCategory().Select(x => x.Id).ToList<int>();
                 var shop = new Shop()
                 {
-                    Name = "NEMO SHOP",
-                    Company = "NEMO SHOP",
-                    Url = "https://zoocool.com.ua",
+                    Name = Settings.PriceSettings.Name,
+                    Company = Settings.PriceSettings.CopanyName,
+                    Url = Settings.PriceSettings.URL,
                     Currencies = new Currencies() { Currency = new Currency() { Id = "UAH", Rate = "1" } },
                 };
 

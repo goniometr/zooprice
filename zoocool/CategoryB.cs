@@ -17,7 +17,7 @@ namespace zoocool
         public List<CategoryB> GetListCategory()
         {
             var list = new List<CategoryB>();
-            MySqlConnection conn = new MySqlConnection(Settings.ConStr); 
+            MySqlConnection conn = new MySqlConnection(Settings.PriceSettings.ConStr); 
             conn.Open();            
             string sql = "SELECT id, parent_id, name FROM shop_category";
             MySqlCommand command = new MySqlCommand(sql, conn);
@@ -39,7 +39,7 @@ namespace zoocool
         public List<CategoryB> GetListcategoryToPrice(int id)
         {
             var list = new List<CategoryB>();
-            MySqlConnection conn = new MySqlConnection(Settings.ConStr);
+            MySqlConnection conn = new MySqlConnection(Settings.PriceSettings.ConStr);
             conn.Open();
             string sql = string.Format("SELECT id, parent_id, name from shop_category where id = {0} union select id, parent_id, name from shop_category where id in (select parent_id from shop_category where id = {0})", id);
             MySqlCommand command = new MySqlCommand(sql, conn);

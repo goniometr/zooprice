@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using zoocool.AllProducts;
 using zoocool.Xml2CSharp;
 
@@ -27,13 +28,22 @@ namespace zoocool
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (!File.Exists("settings.txt"))
+            if (!File.Exists("PriceSettings.xml"))
             {
-                MessageBox.Show("Отсутствует файл с настройками settings.txt");
+                MessageBox.Show("Отсутствует файл с настройками PriceSettings.xml");
                 this.Close();
                 return;
             }
-            Settings.ConStr = File.ReadAllLines("settings.txt").FirstOrDefault();
+
+
+            XmlSerializer formatter = new XmlSerializer(typeof(PriceSettings));
+            using (FileStream fs = new FileStream("PriceSettings.xml", FileMode.OpenOrCreate))
+            {
+                PriceSettings priceSettings = (PriceSettings)formatter.Deserialize(fs);
+
+                Settings.PriceSettings = priceSettings;
+            }
+            //Settings.ConStr = File.ReadAllLines("settings.txt").FirstOrDefault();
           
             //var listCategory = new CategoryB().GetListCategory();
             //var listParentCategory = listCategory.Where(x => x.Parent_Id == 0);

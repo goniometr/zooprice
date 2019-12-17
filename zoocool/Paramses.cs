@@ -17,7 +17,7 @@ namespace zoocool
         {
             var list = new List<Paramses>();
             if (product_id < 0) return list;
-            MySqlConnection conn = new MySqlConnection(Settings.ConStr);
+            MySqlConnection conn = new MySqlConnection(Settings.PriceSettings.ConStr);
             conn.Open();
             string sql = string.Format("select t2.name, t3.value, 'true' " +
                 "from shop_product_features t1 "

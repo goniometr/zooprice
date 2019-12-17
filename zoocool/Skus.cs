@@ -20,7 +20,7 @@ namespace zoocool
         {
             var list = new List<Skus>();
             if (product_id < 0) return list;
-            MySqlConnection conn = new MySqlConnection(Settings.ConStr);
+            MySqlConnection conn = new MySqlConnection(Settings.PriceSettings.ConStr);
             conn.Open();
             string sql = string.Format("SELECT  t1.id, t1.product_id, t1.name, t1.price,  t18.value FROM shop_product_skus t1 left join shop_product_features t16 on t1.product_id = t16.product_id  and(t1.id = t16.sku_id or t16.sku_id is null) and t16.feature_id = 188 left join shop_feature t17 on t16.feature_id = t17.id and t16.feature_id = 188 left join shop_feature_values_double t18 on t16.feature_value_id = t18.id Where t1.product_id = {0}", product_id);
             MySqlCommand command = new MySqlCommand(sql, conn);

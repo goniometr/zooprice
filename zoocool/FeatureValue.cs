@@ -15,7 +15,7 @@ namespace zoocool
         public List<FeatureValue> GetValues(int featureId)
         {
             var list = new List<FeatureValue>();
-            MySqlConnection conn = new MySqlConnection(Settings.ConStr);
+            MySqlConnection conn = new MySqlConnection(Settings.PriceSettings.ConStr);
             conn.Open();
             string sql = string.Format("SELECT id, value from shop_feature_values_varchar where feature_id = {0}", featureId);
             MySqlCommand command = new MySqlCommand(sql, conn);

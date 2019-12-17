@@ -37,7 +37,7 @@ namespace zoocool
            // if (string.IsNullOrEmpty(addlist[addParam])) Settings.Errores.Add("Not addParam with key " + addParam.ToString());
 
 
-            MySqlConnection conn = new MySqlConnection(Settings.ConStr);
+            MySqlConnection conn = new MySqlConnection(Settings.PriceSettings.ConStr);
             conn.Open();
             string sql = string.Format("SELECT t1.id, t1.name, t1.summary, t1.description, t1.category_id, t1.url, t1.Price " +
 "FROM shop_product t1 " +
