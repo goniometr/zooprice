@@ -97,12 +97,18 @@ namespace zoocool
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
-        {
+        {          
             new Yml_catalog().hhh();
-            File.WriteAllLines("erroresUrls.txt", Settings.Urls.Distinct());
-            MessageBox.Show("OK \n Errores: \n " + string.Join(",\n ", Settings.Errores.Distinct()) +
-                "\n Dublicate: \n " + string.Join(",\n ", Settings.Dublicates.Distinct()) +
-                "\n Urls: \n " + string.Join(",\n ", Settings.Urls.Distinct()));
+            var errores = new Errores();
+         
+            MessageBox.Show(string.Format("OK \n Ошибок {0} \n  Просмотрите в файле errores.xml", errores.duplicates.Count + errores.error.Count));
+
+            XmlSerializer formatter = new XmlSerializer(typeof(Errores));
+
+            using (FileStream fs = new FileStream("errores.xml", FileMode.Create))
+            {
+                formatter.Serialize(fs, errores);
+            }
         }
 
         private void toolStripLabel1_Click(object sender, EventArgs e)

@@ -234,7 +234,7 @@ namespace zoocool
                                 CurrencyId = "UAH",
                                 CategoryId = categoryId.ToString(),
                                 Picture = product.Images,
-                                Vendor = listVendor.Where(x => x.Product_id == skus.Product_id)?.FirstOrDefault()?.Name,
+                                Vendor = listVendor.Where(x => x.Product_id == skus.Product_id)?.FirstOrDefault()?.Name ?? string.Empty,
                                 Stock_quantity = product.Count.ToString(),
                                 Name = product.Name.ToString() + additname.ToString(),
                                 Description = product.Description.ToString(),
@@ -272,8 +272,14 @@ namespace zoocool
                             Settings.Dublicates.Add(string.Concat(item.Select(x => x.CategoryId).FirstOrDefault(), item.Select(x => x.Url).FirstOrDefault()));
 
                     foreach (var item in shop.Offers.Offer)
+                    {
                         if (item.Description.Contains(" href"))
                             Settings.Urls.Add(item.Url);
+                        if (item.Vendor == string.Empty)                         
+                            Settings.Errores.Add(string.Format("Не указана торговая марка {0}, {1}", item.Id, string.Empty));
+                    }
+
+                    
 
                 }
                 if (shop.Categories == null) return shop;

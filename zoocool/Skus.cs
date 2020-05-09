@@ -37,11 +37,14 @@ namespace zoocool
                 var res = double.TryParse(reader[4].ToString(), out oldPrice);                
                 ob.OldPrice = oldPrice;
 
-                if(ob.OldPrice <= ob.Price || ob.OldPrice < 0) 
+                if((ob.OldPrice <= ob.Price || ob.OldPrice < 0) && ob.OldPrice != 0) 
                 {
                     ob.OldPrice = 0;
                     Settings.Errores.Add(string.Format("Старая цена не актуальна {0}, {1}", product_id, ob.Id));
                 }
+
+                
+
 
                 list.Add(ob);
             }
